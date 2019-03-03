@@ -23,7 +23,6 @@ public class Establishment {
 
     private String type;
 
-    @OneToMany(mappedBy = "establishment", targetEntity = Product.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
     public String getId() {
@@ -86,4 +85,5 @@ public class Establishment {
         return products;
     }
 
+    public void setProducts(List<Product> products) { this.products = products; }
 }

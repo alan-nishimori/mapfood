@@ -2,7 +2,6 @@ package mapfood.entity;
 
 import javax.persistence.*;
 
-@Entity
 public class Product {
 
     @Id
@@ -13,10 +12,6 @@ public class Product {
     private String classification;
 
     private Double price;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "establishment")
-    private Establishment establishment;
 
     public String getId() {
         return id;
@@ -50,11 +45,4 @@ public class Product {
         this.price = price;
     }
 
-    public Establishment getEstablishment() {
-        return establishment;
-    }
-
-    public void setEstablishment(Establishment establishment) {
-        this.establishment = establishment;
-    }
 }
