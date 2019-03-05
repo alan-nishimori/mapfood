@@ -1,9 +1,9 @@
 package mapfood.repository;
 
-import mapfood.model.Client;
+import mapfood.model.Establishment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClientRepository extends MongoRepository<Client, Integer> {
+public interface EstablishmentRepository extends MongoRepository<Establishment, String> {
 }

@@ -1,4 +1,4 @@
-package mapfood.entity;
+package mapfood.model;
 
 import org.springframework.data.annotation.Id;
 
@@ -12,8 +12,6 @@ public class Product {
     private String classification;
 
     private Double price;
-
-    private Establishment establishment;
 
     public String getId() {
         return id;
@@ -47,11 +45,13 @@ public class Product {
         this.price = price;
     }
 
-    public Establishment getEstablishment() {
-        return establishment;
-    }
-
-    public void setEstablishment(Establishment establishment) {
-        this.establishment = establishment;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", classification='" + classification + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

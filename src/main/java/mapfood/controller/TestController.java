@@ -1,7 +1,10 @@
 package mapfood.controller;
 
-import mapfood.entity.ClientEntity;
+import mapfood.model.Establishment;
+import mapfood.model.Localization;
+import mapfood.model.Product;
 import mapfood.repository.ClientRepository;
+import mapfood.repository.EstablishmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +18,34 @@ public class TestController {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    EstablishmentRepository establishmentRepository;
+
     @GetMapping
     public HttpStatus test() {
-        ClientEntity client = new ClientEntity();
-        client.setId(1);
-        client.setLatitude(10D);
-        client.setLongitude(20D);
-        client.setType("Point");
-        clientRepository.save(client);
-        System.out.println(clientRepository.findById(1).orElseThrow(() -> new RuntimeException("erro")).toString());
+//        Product product = new Product();
+//        product.setClassification("Classificação");
+//        product.setDescription("Descrição");
+//        product.setId("Produto");
+//        product.setPrice(200D);
+//
+//        Localization localization = new Localization();
+//        localization.setLatitude(10D);
+//        localization.setLongitude(20D);
+//
+//        Establishment establishment = new Establishment();
+//        establishment.setCity("São Paulo");
+//        establishment.setDescription("Descrição estabelimento");
+//        establishment.setId("Estabelecimento");
+//        establishment.setName("Nome");
+//        establishment.addProduct(product);
+//        establishment.setLocalization(localization);
+//
+//        establishmentRepository.save(establishment);
+
+        Establishment establishment = establishmentRepository.findById("Estabelecimento").orElseThrow(() -> new RuntimeException("Erro"));
+        System.out.println(establishment);
+
         return HttpStatus.OK;
     }
 
