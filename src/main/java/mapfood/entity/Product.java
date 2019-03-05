@@ -1,8 +1,7 @@
 package mapfood.entity;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
 
-@Entity
 public class Product {
 
     @Id
@@ -14,8 +13,6 @@ public class Product {
 
     private Double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "establishment")
     private Establishment establishment;
 
     public String getId() {

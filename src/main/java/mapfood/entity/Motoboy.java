@@ -1,16 +1,17 @@
 package mapfood.entity;
 
-import javax.persistence.Id;
-import java.math.BigDecimal;
+import org.springframework.data.annotation.Id;
 
 public class Motoboy {
 
     @Id
     private Integer id;
 
-    private BigDecimal latitude;
+    private String type;
 
-    private BigDecimal longitude;
+    private Double latitude;
+
+    private Double longitude;
 
     public Integer getId() {
         return id;
@@ -20,19 +21,27 @@ public class Motoboy {
         this.id = id;
     }
 
-    public BigDecimal getLatitude() {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(BigDecimal latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public BigDecimal getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(BigDecimal longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }
