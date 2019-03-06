@@ -1,8 +1,7 @@
 package mapfood.controller;
 
-import mapfood.model.Establishment;
-import mapfood.model.Localization;
-import mapfood.model.Product;
+import mapfood.feign.MapLinkFeignClient;
+import mapfood.model.maplink.ClientAuthorizationData;
 import mapfood.repository.ClientRepository;
 import mapfood.repository.EstablishmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,9 @@ public class TestController {
 
     @Autowired
     EstablishmentRepository establishmentRepository;
+
+    @Autowired
+    MapLinkFeignClient mapLinkFeignClient;
 
     @GetMapping
     public HttpStatus test() {
@@ -43,8 +45,14 @@ public class TestController {
 //
 //        establishmentRepository.save(establishment);
 
-        Establishment establishment = establishmentRepository.findById("Estabelecimento").orElseThrow(() -> new RuntimeException("Erro"));
-        System.out.println(establishment);
+//        Establishment establishment = establishmentRepository.findById("Estabelecimento").orElseThrow(() -> new RuntimeException("Erro"));
+//        System.out.println(establishment);
+
+        ClientAuthorizationData clientAuthorizationData = new ClientAuthorizationData();
+        clientAuthorizationData.setClientId("${maplink.consumer.key}");
+        clientAuthorizationData.setClientSecret("${maplink.consumer.secret}");
+
+        System.out.println(mapLinkFeignClient.applicationLogin(clientAuthorizationData));
 
         return HttpStatus.OK;
     }
