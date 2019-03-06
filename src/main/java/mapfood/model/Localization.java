@@ -2,11 +2,19 @@ package mapfood.model;
 
 public class Localization {
 
-    private Double latitude;
-
     private Double longitude;
 
+    private Double latitude;
+
     private String type = "Point";
+
+    public Localization() {
+    }
+
+    public Localization(Double longitude, Double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public Double getLatitude() {
         return latitude;
