@@ -1,4 +1,4 @@
-package mapfood.model.maplink;
+package mapfood.model.maplinkTeste;
 
 /**
  * @author s2it_aaraujo

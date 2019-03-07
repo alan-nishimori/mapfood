@@ -1,14 +1,19 @@
 package mapfood.feign;
 
-import mapfood.model.maplink.AuthorizationToken;
-import mapfood.model.maplink.ClientAuthorizationData;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import feign.Headers;
+import mapfood.FeignClientConfiguration;
+import mapfood.model.maplinkTeste.AuthorizationToken;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "mapLink", url = "${maplink.url}")
+import java.util.Map;
+
+//@FeignClient(name = "mapLink", url = "${maplinkTeste.url}")
+@FeignClient(name = "mapLink", url = "https://lbslocal-prod.apigee.net", configuration = FeignClientConfiguration.class)
 public interface MapLinkFeignClient {
 
     @PostMapping("/oauth/client_credential/accesstoken?grant_type=client_credentials")
-    AuthorizationToken applicationLogin(@RequestBody ClientAuthorizationData clientAuthorizationData);
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    AuthorizationToken applicationLogin(@RequestBody Map<String, ?> params);
 }

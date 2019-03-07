@@ -1,4 +1,4 @@
-package mapfood.model.maplink;
+package mapfood.model.maplinkTeste;
 
 public class AuthorizationToken {
 
