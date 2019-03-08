@@ -1,5 +1,7 @@
 package mapfood.model;
 
+import java.util.Locale;
+
 public class Localization {
 
     private Double latitude;
@@ -26,6 +28,10 @@ public class Localization {
 
     public String getType() {
         return type;
+    }
+
+    public String toUrlValue() {
+        return String.format(Locale.ENGLISH, "%.8f,%.8f", this.latitude, this.longitude);
     }
 
     @Override
