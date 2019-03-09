@@ -15,7 +15,7 @@ public class ClientStarter {
 
         String csvFile = "clientes.csv";
         String line;
-        String csvSplitter = ",";
+        String csvSplitter = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
         List<Client> clients = new ArrayList<>();
 

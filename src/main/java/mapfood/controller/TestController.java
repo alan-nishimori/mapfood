@@ -1,12 +1,11 @@
 package mapfood.controller;
 
 import mapfood.dbstarter.ClientStarter;
+import mapfood.dbstarter.EstablishmentStarter;
 import mapfood.dbstarter.MotoboyStarter;
 import mapfood.model.Client;
 import mapfood.model.Establishment;
-import mapfood.model.Localization;
 import mapfood.model.Motoboy;
-import mapfood.model.Product;
 import mapfood.repository.ClientRepository;
 import mapfood.repository.EstablishmentRepository;
 import mapfood.repository.MotoboyRepository;
@@ -47,9 +46,12 @@ public class TestController {
 
     @GetMapping("/populate-client")
     public HttpStatus populateClient() {
+        Instant now = Instant.now();
+        logger.info("Starting method, time{}", now);
         List<Client> clients = ClientStarter.clientStart();
         clientRepository.saveAll(clients);
-
+        now = Instant.now();
+        logger.info("Finished method, time{}", now);
         return HttpStatus.OK;
     }
 
@@ -59,6 +61,17 @@ public class TestController {
         logger.info("Starting method, time{}", now);
         List<Motoboy> motoboys = MotoboyStarter.motoboyStart();
         motoboyRepository.saveAll(motoboys);
+        now = Instant.now();
+        logger.info("Finished method, time{}", now);
+        return HttpStatus.OK;
+    }
+
+    @GetMapping("/populate-establishment")
+    public HttpStatus populateEstablishment() {
+        Instant now = Instant.now();
+        logger.info("Starting method, time{}", now);
+        List<Establishment> establishments = EstablishmentStarter.establishmentsStart();
+        establishmentRepository.saveAll(establishments);
         now = Instant.now();
         logger.info("Finished method, time{}", now);
         return HttpStatus.OK;
