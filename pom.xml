@@ -8,7 +8,7 @@
         <version>2.1.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>br.com.aceleradev.mapfood</groupId>
     <artifactId>mapfood</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mapfood</name>
