@@ -3,8 +3,11 @@ package mapfood.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "order")
@@ -12,6 +15,10 @@ public class Order {
 
     @Id
     private Integer id;
+
+    @Field("created_at")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date createdAt;
 
     @Indexed
     private String establishmentId;
@@ -30,6 +37,14 @@ public class Order {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(final Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getEstablishmentId() {

@@ -1,6 +1,9 @@
 package mapfood.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,8 +22,8 @@ public class Establishment {
 
     private String description;
 
-    @Indexed
-    private Localization localization;
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE, name = "idx_geospatial")
+    private GeoJsonPoint localization;
 
     private List<Product> products = new ArrayList<>();
 
@@ -56,11 +59,11 @@ public class Establishment {
         this.description = description;
     }
 
-    public Localization getLocalization() {
+    public GeoJsonPoint getLocalization() {
         return localization;
     }
 
-    public void setLocalization(Localization localization) {
+    public void setLocalization(GeoJsonPoint localization) {
         this.localization = localization;
     }
 
