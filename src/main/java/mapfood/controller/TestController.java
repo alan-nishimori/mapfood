@@ -5,6 +5,8 @@ import mapfood.model.Localization;
 import mapfood.repository.ClientRepository;
 import mapfood.repository.EstablishmentRepository;
 import mapfood.service.gmaps.DirectionsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,8 @@ public class TestController {
 
     @Autowired
     DirectionsService directionsService;
+
+    Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @GetMapping
     public HttpStatus test() throws InterruptedException, InvalidKeyException, IOException {
