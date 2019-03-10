@@ -1,9 +1,9 @@
 package mapfood.service.gmaps.impl;
 
 import mapfood.dto.google.maps.api.DirectionsResult;
-import mapfood.model.Localization;
 import mapfood.service.gmaps.DirectionsService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,18 +29,21 @@ public class DirectionsServiceImpl implements DirectionsService {
     private String apiKey;
 
     @Override
-    public DirectionsResult getDistance(Localization origin, Localization destination, List<Localization> waypoints)
+    public DirectionsResult getDistance(GeoJsonPoint origin, GeoJsonPoint destination, List<GeoJsonPoint> waypoints)
             throws IOException, InvalidKeyException {
 
-        baseUrl = baseUrl.replace("[lat1],[lng1]",origin.toUrlValue());
-        baseUrl = baseUrl.replace("[lat2],[lng2]",destination.toUrlValue());
+        final String originString = origin.getY() + "," + origin.getX();
+        baseUrl = baseUrl.replace("[lat1],[lng1]", originString);
+
+        final String destinationString = destination.getY() + "," + destination.getX();
+        baseUrl = baseUrl.replace("[lat2],[lng2]", destinationString);
 
         baseUrl = baseUrl.concat("&alternatives=false");
 
         if (!Objects.isNull(waypoints)) {
             baseUrl = baseUrl.concat("&waypoints=optimize:true");
-            for (Localization waypoint : waypoints) {
-                baseUrl = baseUrl.concat("|" + waypoint.toUrlValue());
+            for (GeoJsonPoint waypoint : waypoints) {
+                baseUrl = baseUrl.concat("|" + waypoint.getY() + "," + waypoint.getX());
             }
         }
 

@@ -1,11 +1,10 @@
 package mapfood.repository;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoCredential;
-import mapfood.model.Establishment;
-import mapfood.model.MotoboyWithDistance;
+import mapfood.model.establishment.Establishment;
+import mapfood.model.motoboy.MotoboyWithDistance;
+import mapfood.repository.motoboy.impl.MotoboyRepositoryImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -46,16 +45,16 @@ public class MotoboyRepositoryTest {
     @Test
     public void shouldReturnClosestMotoboyForGivenEstablishmentId(){
         Establishment establishment = new Establishment();
-        establishment.setLocalization(new GeoJsonPoint(new Point(-46.691015, -23.620705)));
+        establishment.setLocation(new GeoJsonPoint(new Point(-46.691015, -23.620705)));
 
         MotoboyWithDistance target = new MotoboyWithDistance();
-        target.setLocalization(new GeoJsonPoint(new Point(-51.13475445, -30.03150529)));
+        target.setLocation(new GeoJsonPoint(new Point(-51.13475445, -30.03150529)));
         target.setDistance(0.13152995774874102);
 
-        MotoboyWithDistance motoboy = repository.findClosestMotoboy(establishment.getLocalization());
+        MotoboyWithDistance motoboy = repository.findClosestMotoboy(establishment.getLocation());
 
         Assertions.assertNotNull(motoboy);
         Assertions.assertEquals(target.getDistance(), motoboy.getDistance());
-        Assertions.assertIterableEquals(motoboy.getLocalization().getCoordinates(), target.getLocalization().getCoordinates());
+        Assertions.assertIterableEquals(motoboy.getLocation().getCoordinates(), target.getLocation().getCoordinates());
     }
 }
