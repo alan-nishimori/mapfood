@@ -6,6 +6,7 @@ import mapfood.model.motoboy.Motoboy;
 import mapfood.repository.motoboy.MotoboyRepository;
 import mapfood.service.motoboy.MotoboyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MotoboyServiceImpl implements MotoboyService {
 
         final Motoboy motoboy = new Motoboy();
         motoboy.setId(motoboyDto.getId());
-        motoboy.setLocation(motoboyDto.getLocation());
+        motoboy.setLocation(new GeoJsonPoint(motoboyDto.getLocation().get(0), motoboyDto.getLocation().get(1)));
 
         return new MotoboyEntityToDto(motoboyRepository.save(motoboy)).build();
     }
@@ -33,7 +34,7 @@ public class MotoboyServiceImpl implements MotoboyService {
         final Optional<Motoboy> motoboy = motoboyRepository.findById(id);
 
         if (motoboy.isPresent()) {
-            motoboy.get().setLocation(motoboyDto.getLocation());
+            motoboy.get().setLocation(new GeoJsonPoint(motoboyDto.getLocation().get(0), motoboyDto.getLocation().get(1)));
             motoboy.get().setMotoboyStatus(motoboyDto.getMotoboyStatus());
             return new MotoboyEntityToDto(motoboyRepository.save(motoboy.get())).build();
         }
