@@ -75,15 +75,8 @@ public class Establishment {
         this.products.add(product);
     }
 
-    @Override
-    public String toString() {
-        return "Establishment{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", description='" + description + '\'' +
-                ", location=" + location +
-                ", products=" + products +
-                '}';
+    public void removeProduct(Product product) {
+        this.products.remove(product);
     }
+
 }

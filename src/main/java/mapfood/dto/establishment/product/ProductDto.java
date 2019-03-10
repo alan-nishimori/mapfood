@@ -1,23 +1,27 @@
-package mapfood.model.establishment.product;
+package mapfood.dto.establishment.product;
 
-import org.springframework.data.annotation.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-public class Product {
+public class ProductDto {
 
-    @Id
+    @NotEmpty
     private String id;
 
+    @NotEmpty
     private String description;
 
+    @NotEmpty
     private String classification;
 
+    @NotNull
     private Double price;
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -25,7 +29,7 @@ public class Product {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -33,7 +37,7 @@ public class Product {
         return classification;
     }
 
-    public void setClassification(String classification) {
+    public void setClassification(final String classification) {
         this.classification = classification;
     }
 
@@ -41,8 +45,7 @@ public class Product {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(final Double price) {
         this.price = price;
     }
-
 }

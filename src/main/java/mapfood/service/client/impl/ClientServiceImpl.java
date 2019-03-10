@@ -28,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDto update(int id, ClientDto clientDto) {
+    public ClientDto update(final int id, final ClientDto clientDto) {
         final Optional<Client> client = clientRepository.findById(id);
 
         if (client.isPresent()) {
@@ -40,12 +40,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDto findById(int id) {
+    public ClientDto findById(final int id) {
         final Optional<Client> client = clientRepository.findById(id);
 
         return client.map(client1 -> new ClientEntityToDto(client1).build()).orElse(null);
     }
 
+    // TODO adicionar paginação
     @Override
     public List<ClientDto> findAll() {
         final List<Client> clients = clientRepository.findAll();
