@@ -16,7 +16,6 @@ public class Order {
     @Id
     private Integer id;
 
-    @Field("created_at")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date createdAt;
 

@@ -16,6 +16,8 @@ public class Motoboy {
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE, name = "idx_geospatial")
     private GeoJsonPoint localization;
 
+    private MotoboyStatus motoboyStatus = MotoboyStatus.AVAILABLE;
+
     public Integer getId() {
         return id;
     }
@@ -30,5 +32,13 @@ public class Motoboy {
 
     public void setLocalization(GeoJsonPoint localization) {
         this.localization = localization;
+    }
+
+    public MotoboyStatus getMotoboyStatus() {
+        return motoboyStatus;
+    }
+
+    public void setMotoboyStatus(final MotoboyStatus motoboyStatus) {
+        this.motoboyStatus = motoboyStatus;
     }
 }

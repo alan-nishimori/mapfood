@@ -3,6 +3,7 @@ package mapfood.model;
 public enum MotoboyStatus {
     AVAILABLE,
     WAITING,
-    DELIVERING
+    DELIVERING,
+    UNAVAILABLE
 }
 
