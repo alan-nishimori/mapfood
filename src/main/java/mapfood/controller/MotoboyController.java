@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public class MotoboyController {
     private final Logger logger = LoggerFactory.getLogger(MotoboyController.class);
 
     @PostMapping
-    public ResponseEntity<MotoboyDto> create(@RequestBody final MotoboyDto motoboyDto) {
+    public ResponseEntity<MotoboyDto> create(@RequestBody @Valid final MotoboyDto motoboyDto) {
         logger.info("Starting motoboy creation - params: {}", motoboyDto);
 
         final MotoboyDto motoboy = motoboyService.save(motoboyDto);
@@ -39,7 +40,7 @@ public class MotoboyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MotoboyDto> update(@PathVariable final int id, @RequestBody final MotoboyDto motoboyDto) {
+    public ResponseEntity<MotoboyDto> update(@PathVariable final int id, @RequestBody @Valid final MotoboyDto motoboyDto) {
         logger.info("Starting update on motoboy info with id: {} - params: {}", id, motoboyDto);
 
         final MotoboyDto motoboy = motoboyService.update(id, motoboyDto);

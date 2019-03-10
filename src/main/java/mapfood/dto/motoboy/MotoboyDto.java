@@ -3,12 +3,17 @@ package mapfood.dto.motoboy;
 import mapfood.model.MotoboyStatus;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
+import javax.validation.constraints.NotNull;
+
 public class MotoboyDto {
 
+    @NotNull
     private int id;
 
+    @NotNull
     private GeoJsonPoint location;
 
+    @NotNull
     private MotoboyStatus motoboyStatus;
 
     public int getId() {
