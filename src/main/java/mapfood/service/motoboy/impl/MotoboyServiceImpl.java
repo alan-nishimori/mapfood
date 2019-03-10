@@ -2,8 +2,8 @@ package mapfood.service.motoboy.impl;
 
 import mapfood.converter.motoboy.MotoboyEntityToDto;
 import mapfood.dto.motoboy.MotoboyDto;
-import mapfood.model.Motoboy;
-import mapfood.repository.MotoboyRepository;
+import mapfood.model.motoboy.Motoboy;
+import mapfood.repository.motoboy.MotoboyRepository;
 import mapfood.service.motoboy.MotoboyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

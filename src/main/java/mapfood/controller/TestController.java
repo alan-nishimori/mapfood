@@ -1,13 +1,9 @@
 package mapfood.controller;
 
 import mapfood.dto.google.maps.api.DirectionsResult;
-import mapfood.model.Localization;
-import mapfood.repository.ClientRepository;
-import mapfood.repository.EstablishmentRepository;
 import mapfood.service.gmaps.DirectionsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,36 +19,20 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    ClientRepository clientRepository;
-
-    @Autowired
-    EstablishmentRepository establishmentRepository;
-
-    @Autowired
     DirectionsService directionsService;
-
-    Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @GetMapping
     public HttpStatus test() throws InterruptedException, InvalidKeyException, IOException {
 
-        Localization l1 = new Localization();
-        l1.setLatitude(-22.6573743);
-        l1.setLongitude(-50.4270745);
+        GeoJsonPoint l1 = new GeoJsonPoint(-50.4270745, -22.6573743);
 
-        Localization l2 = new Localization();
-        l2.setLatitude(-21.7794567);
-        l2.setLongitude(-48.1928462);
+        GeoJsonPoint l2 = new GeoJsonPoint(-48.1928462, -21.7794567);
 
-        Localization l3 = new Localization();
-        l3.setLatitude(-22.296561);
-        l3.setLongitude(-49.069859);
+        GeoJsonPoint l3 = new GeoJsonPoint(-49.069859, -22.296561);
 
-        Localization l4 = new Localization();
-        l4.setLatitude(-22.306535);
-        l4.setLongitude(-48.575107);
+        GeoJsonPoint l4 = new GeoJsonPoint(-48.575107, -22.306535);
 
-        List<Localization> localizations = new ArrayList<>();
+        List<GeoJsonPoint> localizations = new ArrayList<>();
         localizations.add(l4);
         localizations.add(l3);
 

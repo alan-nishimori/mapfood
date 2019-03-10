@@ -1,4 +1,4 @@
-package mapfood.model;
+package mapfood.model.establishment.product;
 
 import org.springframework.data.annotation.Id;
 

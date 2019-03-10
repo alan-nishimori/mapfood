@@ -1,6 +1,6 @@
-package mapfood.repository;
+package mapfood.repository.client;
 
-import mapfood.model.Client;
+import mapfood.model.client.Client;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

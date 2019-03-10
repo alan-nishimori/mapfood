@@ -1,7 +1,7 @@
 package mapfood.converter.motoboy;
 
 import mapfood.dto.motoboy.MotoboyDto;
-import mapfood.model.Motoboy;
+import mapfood.model.motoboy.Motoboy;
 
 public class MotoboyEntityToDto {
 

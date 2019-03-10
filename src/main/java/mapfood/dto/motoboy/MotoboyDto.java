@@ -1,6 +1,6 @@
 package mapfood.dto.motoboy;
 
-import mapfood.model.MotoboyStatus;
+import mapfood.model.motoboy.MotoboyStatus;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import javax.validation.constraints.NotNull;

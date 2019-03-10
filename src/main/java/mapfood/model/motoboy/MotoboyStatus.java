@@ -1,4 +1,4 @@
-package mapfood.model;
+package mapfood.model.motoboy;
 
 public enum MotoboyStatus {
     AVAILABLE,
