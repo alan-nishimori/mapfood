@@ -1,8 +1,7 @@
 package mapfood.controller;
 
-import mapfood.model.Localization;
-import mapfood.model.Motoboy;
-import mapfood.repository.MotoboyRepository;
+import mapfood.dto.motoboy.MotoboyDto;
+import mapfood.service.motoboy.MotoboyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,64 +17,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("motoboy")
 public class MotoboyController {
 
     @Autowired
-    MotoboyRepository motoboyRepository;
+    MotoboyService motoboyService;
 
-    private final Logger logger = LoggerFactory.getLogger(TestController.class);
+    private final Logger logger = LoggerFactory.getLogger(MotoboyController.class);
 
     @PostMapping
-    public ResponseEntity<Motoboy> create(@RequestBody final Motoboy motoboyDto) {
+    public ResponseEntity<MotoboyDto> create(@RequestBody final MotoboyDto motoboyDto) {
         logger.info("Starting motoboy creation - params: {}", motoboyDto);
 
-        Localization localization = new Localization();
-        localization.setLongitude(motoboyDto.getLocalization().getLongitude());
-        localization.setLatitude(motoboyDto.getLocalization().getLatitude());
+        final MotoboyDto motoboy = motoboyService.save(motoboyDto);
 
-        Motoboy motoboy = new Motoboy();
-        motoboy.setId(motoboyDto.getId());
-        motoboy.setLocalization(localization);
-
-        final Motoboy motoboyEntity = motoboyRepository.save(motoboy);
         logger.info("Successfully created motoboy.");
-        return new ResponseEntity<>(motoboyEntity, HttpStatus.CREATED);
+        return new ResponseEntity<>(motoboy, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Motoboy> update(@PathVariable final int id, @RequestBody final Motoboy motoboyDto) {
+    public ResponseEntity<MotoboyDto> update(@PathVariable final int id, @RequestBody final MotoboyDto motoboyDto) {
         logger.info("Starting update on motoboy info with id: {} - params: {}", id, motoboyDto);
 
-        Optional<Motoboy> motoboy = motoboyRepository.findById(id);
+        final MotoboyDto motoboy = motoboyService.update(id, motoboyDto);
 
-        if (motoboy.isPresent()) {
-            Localization localization = new Localization();
-
-            localization.setLongitude(motoboy.get().getLocalization().getLongitude());
-            localization.setLatitude(motoboy.get().getLocalization().getLatitude());
-            motoboy.get().setLocalization(localization);
-
-            final Motoboy motoboyEntity = motoboyRepository.save(motoboy.get());
-            logger.info("Motoboy successfully updated");
-            return new ResponseEntity<>(motoboyEntity, HttpStatus.OK);
+        if (Objects.isNull(motoboy)) {
+            logger.warn("No motoboy found for id: {}", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        logger.warn("No motoboy found for id: {}", id);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        logger.info("Motoboy successfully updated");
+        return new ResponseEntity<>(motoboy, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable final int id) {
         logger.info("Starting delete of motoboy with id: {}", id);
 
-        final Optional<Motoboy> motoboy = motoboyRepository.findById(id);
-
-        if (motoboy.isPresent()) {
-            motoboyRepository.deleteById(id);
+        if (motoboyService.deleteById(id)) {
             logger.info("Successfully delete motoboy with id: {}", id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -86,27 +68,27 @@ public class MotoboyController {
 
     // Refatorar com paginação
     @GetMapping
-    public ResponseEntity<List<Motoboy>> findAll() {
+    public ResponseEntity<List<MotoboyDto>> findAll() {
         logger.info("Getting all motoboys from the database.");
 
-        final List<Motoboy> motoboys = motoboyRepository.findAll();
+        final List<MotoboyDto> motoboys = motoboyService.findAll();
 
-        logger.info("All motoboys retrieved.");
+        logger.info("All motoboys successfully retrieved.");
         return new ResponseEntity<>(motoboys, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Motoboy> findById(@PathVariable final int id) {
+    public ResponseEntity<MotoboyDto> findById(@PathVariable final int id) {
         logger.info("Searching for motoboy with id: {}", id);
 
-        final Optional<Motoboy> motoboy = motoboyRepository.findById(id);
+        final MotoboyDto motoboy = motoboyService.findById(id);
 
-        if (motoboy.isPresent()) {
-            logger.info("Motoboy successfully found.");
-            return new ResponseEntity<>(motoboy.get(), HttpStatus.OK);
+        if (Objects.isNull(motoboy)) {
+            logger.warn("No motoboy found for id: {}", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        logger.warn("No motoboy found for id: {}", id);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        logger.info("Motoboy successfully retrieved.");
+        return new ResponseEntity<>(motoboy, HttpStatus.OK);
     }
 }

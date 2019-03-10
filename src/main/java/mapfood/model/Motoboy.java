@@ -1,6 +1,7 @@
 package mapfood.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +12,9 @@ public class Motoboy {
     private Integer id;
 
     @Indexed
-    private Localization localization;
+    private GeoJsonPoint location;
+
+    private MotoboyStatus motoboyStatus = MotoboyStatus.AVAILABLE;
 
     public Integer getId() {
         return id;
@@ -21,11 +24,19 @@ public class Motoboy {
         this.id = id;
     }
 
-    public Localization getLocalization() {
-        return localization;
+    public GeoJsonPoint getLocation() {
+        return location;
     }
 
-    public void setLocalization(Localization localization) {
-        this.localization = localization;
+    public void setLocation(GeoJsonPoint location) {
+        this.location = location;
+    }
+
+    public MotoboyStatus getMotoboyStatus() {
+        return motoboyStatus;
+    }
+
+    public void setMotoboyStatus(final MotoboyStatus motoboyStatus) {
+        this.motoboyStatus = motoboyStatus;
     }
 }
