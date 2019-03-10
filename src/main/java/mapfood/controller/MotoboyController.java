@@ -59,7 +59,7 @@ public class MotoboyController {
         logger.info("Starting delete of motoboy with id: {}", id);
 
         if (motoboyService.deleteById(id)) {
-            logger.info("Successfully delete motoboy with id: {}", id);
+            logger.info("Successfully deleted motoboy with id: {}", id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
@@ -67,7 +67,7 @@ public class MotoboyController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // Refatorar com paginação
+    // TODO Refatorar com paginação
     @GetMapping
     public ResponseEntity<List<MotoboyDto>> findAll() {
         logger.info("Getting all motoboys from the database.");

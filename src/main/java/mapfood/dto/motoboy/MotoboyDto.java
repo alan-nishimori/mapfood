@@ -4,6 +4,7 @@ import mapfood.model.motoboy.MotoboyStatus;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class MotoboyDto {
 
@@ -11,7 +12,7 @@ public class MotoboyDto {
     private int id;
 
     @NotNull
-    private GeoJsonPoint location;
+    private List<Double> location;
 
     @NotNull
     private MotoboyStatus motoboyStatus;
@@ -24,11 +25,11 @@ public class MotoboyDto {
         this.id = id;
     }
 
-    public GeoJsonPoint getLocation() {
+    public List<Double> getLocation() {
         return location;
     }
 
-    public void setLocation(final GeoJsonPoint location) {
+    public void setLocation(final List<Double> location) {
         this.location = location;
     }
 
