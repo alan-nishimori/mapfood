@@ -17,9 +17,9 @@ public interface EstablishmentService {
 
     Boolean deleteById(String id);
 
-    EstablishmentDto addItem(String idEstablishment, ProductDto productDto);
+    EstablishmentDto addProduct(String idEstablishment, ProductDto productDto);
 
-    EstablishmentDto removeItem(String idEstablishment, String idItem);
+    EstablishmentDto removeProduct(String idEstablishment, String idProduct) throws RuntimeException;
 
-    EstablishmentDto updateItem(String idEstablishment, String idItem, ProductDto productDto);
+    EstablishmentDto updateProduct(String idEstablishment, String idProduct, ProductDto productDto) throws RuntimeException;
 }

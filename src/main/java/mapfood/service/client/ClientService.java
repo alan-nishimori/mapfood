@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ClientService {
 
-    ClientDto save(final ClientDto clientDto);
+    ClientDto save(ClientDto clientDto);
 
-    ClientDto update(final int id, final ClientDto clientDto);
+    ClientDto update(int id, ClientDto clientDto);
 
-    ClientDto findById(final int id);
+    ClientDto findById(int id);
 
     List<ClientDto> findAll();
 
-    Boolean deleteById(final int id);
+    Boolean deleteById(int id);
 }

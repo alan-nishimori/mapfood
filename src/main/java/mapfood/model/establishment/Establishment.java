@@ -79,4 +79,13 @@ public class Establishment {
         this.products.remove(product);
     }
 
+    public Product getProductById(String id) {
+        for (Product product : this.products) {
+            if (product.getId().equals(id)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
 }

@@ -25,10 +25,11 @@ public class Order {
     @Indexed
     private Integer clientId;
 
-    @Indexed
-    private Integer motoboyId;
+    private Double value;
 
     private List<Product> products = new ArrayList<>();
+
+    private OrderStatus orderStatus = OrderStatus.PREPARING;
 
     public Integer getId() {
         return id;
@@ -62,19 +63,27 @@ public class Order {
         this.clientId = clientId;
     }
 
-    public Integer getMotoboyId() {
-        return motoboyId;
-    }
-
-    public void setMotoboyId(Integer motoboyId) {
-        this.motoboyId = motoboyId;
-    }
-
     public List<Product> getProducts() {
         return products;
     }
 
     public void addProduct(Product product) {
         this.products.add(product);
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(final Double value) {
+        this.value = value;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(final OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

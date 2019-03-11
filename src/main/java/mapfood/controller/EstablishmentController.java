@@ -100,7 +100,7 @@ public class EstablishmentController {
             @PathVariable final String id, @RequestBody @Valid ProductDto productDto) {
         logger.info("Adding new product to establishment id: {} - params: {}", id, productDto);
 
-        final EstablishmentDto establishment = establishmentService.addItem(id, productDto);
+        final EstablishmentDto establishment = establishmentService.addProduct(id, productDto);
 
         if (Objects.isNull(establishment)) {
             logger.warn("No establishment found with id: {}", id);
@@ -116,10 +116,12 @@ public class EstablishmentController {
             @PathVariable final String idEstablishment, @PathVariable final String idProduct) {
         logger.info("Removing product: {} from establishment: {}", idProduct, idEstablishment);
 
-        final EstablishmentDto establishment = establishmentService.removeItem(idEstablishment, idProduct);
+        final EstablishmentDto establishment;
 
-        if (Objects.isNull(establishment)) {
-            logger.warn("Product with id: {} or Establishment with id: {} not found", idProduct, idEstablishment);
+        try {
+            establishment = establishmentService.removeProduct(idEstablishment, idProduct);
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -135,10 +137,12 @@ public class EstablishmentController {
     ) {
         logger.info("Updating item: {} from establishment: {} - params: {}", idProduct, idEstablishment, productDto);
 
-        EstablishmentDto establishment = establishmentService.updateItem(idEstablishment, idProduct, productDto);
+        final EstablishmentDto establishment;
 
-        if (Objects.isNull(establishment)) {
-            logger.warn("Product with id: {} or Establishment with id: {} not found", idProduct, idEstablishment);
+        try {
+            establishment = establishmentService.updateProduct(idEstablishment, idProduct, productDto);
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
