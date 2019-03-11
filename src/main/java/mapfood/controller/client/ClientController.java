@@ -1,4 +1,4 @@
-package mapfood.controller;
+package mapfood.controller.client;
 
 import mapfood.dto.client.ClientDto;
 import mapfood.service.client.ClientService;
@@ -27,7 +27,7 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
-    private final Logger logger = LoggerFactory.getLogger(MotoboyController.class);
+    private final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @PostMapping
     public ResponseEntity<ClientDto> create(@RequestBody @Valid final ClientDto clientDto) {

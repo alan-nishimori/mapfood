@@ -1,21 +1,25 @@
 package mapfood.service.order.impl;
 
 import mapfood.converter.order.OrderEntityToDto;
+import mapfood.dto.establishment.product.ProductDto;
 import mapfood.dto.order.OrderDto;
 import mapfood.model.client.Client;
+import mapfood.model.delivery.Delivery;
 import mapfood.model.establishment.Establishment;
 import mapfood.model.establishment.product.Product;
 import mapfood.model.order.Order;
 import mapfood.model.order.OrderStatus;
 import mapfood.repository.client.ClientRepository;
+import mapfood.repository.delivery.DeliveryRepository;
 import mapfood.repository.establishment.EstablishmentRepository;
 import mapfood.repository.order.OrderRepository;
+import mapfood.service.delivery.DeliveryService;
 import mapfood.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,6 +36,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     EstablishmentRepository establishmentRepository;
 
+    @Autowired
+    DeliveryService deliveryService;
+
+    @Autowired
+    DeliveryRepository deliveryRepository;
+
     @Override
     public OrderDto save(final OrderDto orderDto) throws RuntimeException{
         final Optional<Client> client = clientRepository.findById(orderDto.getClientId());
@@ -44,25 +54,46 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("No establishment found with id: " + orderDto.getEstablishmentId());
         }
 
-        final Order order = new Order();
+        Order order = new Order();
         order.setClientId(orderDto.getClientId());
         order.setEstablishmentId(orderDto.getEstablishmentId());
+        order.setId(order.getEstablishmentId() + order.getClientId().toString() + order.getCreatedAt().toString());
 
-        orderDto.getProductsDto().forEach(productDto -> {
+        double total = 0;
+        for (ProductDto productDto : orderDto.getProductsDto()) {
+
             final Product product = establishment.get().getProductById(productDto.getId());
 
             if (Objects.isNull(product)) {
                 throw new RuntimeException("Product with id: " + productDto.getId() + " not found");
             }
 
+            total += product.getPrice();
             order.addProduct(product);
-        });
+        }
+        order.setValue(total);
 
-        return new OrderEntityToDto(orderRepository.save(order)).build();
+        order = orderRepository.save(order);
+
+        List<Order> orders = orderRepository.findAllByEstablishmentIdAndCreatedAtBeforeAndOrderStatus(
+                order.getEstablishmentId(), Instant.now(), OrderStatus.PREPARING);
+
+        if (Objects.isNull(orders)) {
+            deliveryService.save(order);
+        } else {
+            final Optional<Delivery> delivery = deliveryRepository.findByOrdersContaining(orders.get(0));
+            if (delivery.isPresent()) {
+                deliveryService.addOrder(delivery.get().getId(), order);
+            } else {
+                deliveryService.save(order);
+            }
+        }
+
+        return new OrderEntityToDto(order).build();
     }
 
     @Override
-    public OrderDto update(final Integer id, final OrderStatus orderStatus) {
+    public OrderDto update(final String id, final OrderStatus orderStatus) {
         final Optional<Order> order = orderRepository.findById(id);
 
         if (order.isPresent()) {
@@ -74,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto findById(final Integer id) {
+    public OrderDto findById(final String id) {
         final Optional<Order> order = orderRepository.findById(id);
 
         return order.map(order1 -> new OrderEntityToDto(order1).build()).orElse(null);
@@ -101,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findAllByEstablishmentIdAndDateBetween(final String id, final Date start, final Date end) {
+    public List<OrderDto> findAllByEstablishmentIdAndDateBetween(final String id, final Instant start, final Instant end) {
         final List<Order> orders = orderRepository.findAllByEstablishmentIdAndCreatedAtBetween(id, start, end);
         final List<OrderDto> ordersDto = new ArrayList<>();
 
@@ -112,8 +143,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findAllByEstablishmentIdAndDateWithStatus(
-            final String id, final Date date, final OrderStatus orderStatus) {
-        final List<Order> orders = orderRepository.findAllByEstablishmentIdAndCreatedAtAndOrderStatus(id, date, orderStatus);
+            final String id, final Instant date, final OrderStatus orderStatus) {
+        final List<Order> orders = orderRepository.findAllByEstablishmentIdAndCreatedAtBeforeAndOrderStatus(id, date, orderStatus);
         final List<OrderDto> ordersDto = new ArrayList<>();
 
         orders.forEach(order -> ordersDto.add(new OrderEntityToDto(order).build()));

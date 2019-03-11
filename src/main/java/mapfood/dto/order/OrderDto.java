@@ -5,13 +5,14 @@ import mapfood.model.order.OrderStatus;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class OrderDto {
 
-    private Integer id;
+    private String id;
 
     @NotEmpty
     private String establishmentId;
@@ -26,11 +27,15 @@ public class OrderDto {
 
     private OrderStatus orderStatus;
 
-    public Integer getId() {
+    private Double value;
+
+    private Instant createdAt;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(final Integer id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -75,5 +80,21 @@ public class OrderDto {
 
     public void setOrderStatus(final OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(final Double value) {
+        this.value = value;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(final Instant createdAt) {
+        this.createdAt = createdAt;
     }
 }

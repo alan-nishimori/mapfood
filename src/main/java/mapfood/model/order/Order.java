@@ -4,20 +4,19 @@ import mapfood.model.establishment.product.Product;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Document(collection = "order")
 public class Order {
 
     @Id
-    private Integer id;
+    // establishmentid + client id + createdAt
+    private String id;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date createdAt;
+    private final Instant createdAt = Instant.now();
 
     @Indexed
     private String establishmentId;
@@ -27,24 +26,20 @@ public class Order {
 
     private Double value;
 
-    private List<Product> products = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
 
     private OrderStatus orderStatus = OrderStatus.PREPARING;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(final Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getEstablishmentId() {

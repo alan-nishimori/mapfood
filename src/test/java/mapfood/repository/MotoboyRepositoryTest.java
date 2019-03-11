@@ -51,7 +51,7 @@ public class MotoboyRepositoryTest {
         target.setLocation(new GeoJsonPoint(new Point(-51.13475445, -30.03150529)));
         target.setDistance(0.13152995774874102);
 
-        MotoboyWithDistance motoboy = repository.findClosestMotoboy(establishment.getLocation());
+        MotoboyWithDistance motoboy = repository.findClosestMotoboy(establishment.getLocation()).get(0);
 
         Assertions.assertNotNull(motoboy);
         Assertions.assertEquals(target.getDistance(), motoboy.getDistance());

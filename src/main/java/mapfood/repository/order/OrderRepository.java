@@ -4,16 +4,16 @@ import mapfood.model.order.Order;
 import mapfood.model.order.OrderStatus;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
-public interface OrderRepository extends MongoRepository<Order, Integer> {
+public interface OrderRepository extends MongoRepository<Order, String> {
 
     List<Order> findAllByClientId(Integer id);
 
     List<Order> findAllByEstablishmentId(String id);
 
-    List<Order> findAllByEstablishmentIdAndCreatedAtBetween(String id, Date start, Date end);
+    List<Order> findAllByEstablishmentIdAndCreatedAtBetween(String id, Instant start, Instant end);
 
-    List<Order> findAllByEstablishmentIdAndCreatedAtAndOrderStatus(String id, Date date, OrderStatus orderStatus);
+    List<Order> findAllByEstablishmentIdAndCreatedAtBeforeAndOrderStatus(String id, Instant date, OrderStatus orderStatus);
 }
