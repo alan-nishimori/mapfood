@@ -4,7 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import mapfood.model.establishment.Establishment;
 import mapfood.model.motoboy.MotoboyWithDistance;
-import mapfood.repository.motoboy.impl.MotoboyRepositoryImpl;
+import mapfood.repository.motoboy.impl.MotoboyRepositoryCustomImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -33,14 +33,14 @@ public class MotoboyRepositoryTest {
         }
 
         @Bean
-        public MotoboyRepositoryImpl motoboyRepository(MongoTemplate mongoTemplate) {
-            return new MotoboyRepositoryImpl(mongoTemplate);
+        public MotoboyRepositoryCustomImpl motoboyRepository(MongoTemplate mongoTemplate) {
+            return new MotoboyRepositoryCustomImpl(mongoTemplate);
         }
 
     }
 
     @Autowired
-    private MotoboyRepositoryImpl repository;
+    private MotoboyRepositoryCustomImpl repository;
 
     @Test
     public void shouldReturnClosestMotoboyForGivenEstablishmentId(){

@@ -93,7 +93,7 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     @Override
-    public EstablishmentDto addItem(final String idEstablishment, final ProductDto productDto) {
+    public EstablishmentDto addProduct(final String idEstablishment, final ProductDto productDto) {
         final Optional<Establishment> establishment = repository.findById(idEstablishment);
 
         if (establishment.isPresent()) {
@@ -111,39 +111,42 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     @Override
-    public EstablishmentDto removeItem(final String idEstablishment, final String idItem) {
+    public EstablishmentDto removeProduct(final String idEstablishment, final String idProduct) throws RuntimeException {
         final Optional<Establishment> establishment = repository.findById(idEstablishment);
 
         if (establishment.isPresent()) {
             for (int i = 0; i < establishment.get().getProducts().size(); i++) {
                 Product product = establishment.get().getProducts().get(i);
-                if (product.getId().equals(idItem)) {
+                if (product.getId().equals(idProduct)) {
                     establishment.get().removeProduct(product);
                     return new EstablishmentEntityToDto(repository.save(establishment.get())).build();
                 }
             }
+            throw new RuntimeException("Product with id: " + idProduct + " not found");
         }
 
-        return null;
+        throw new RuntimeException("Establishment with id: " + idEstablishment + " not found");
     }
 
     @Override
-    public EstablishmentDto updateItem(final String idEstablishment, final String idItem, final ProductDto productDto) {
+    public EstablishmentDto updateProduct(
+            final String idEstablishment, final String idProduct, final ProductDto productDto) throws RuntimeException{
         final Optional<Establishment> establishment = repository.findById(idEstablishment);
 
         if (establishment.isPresent()) {
             for (int i = 0; i < establishment.get().getProducts().size(); i++) {
                 Product product = establishment.get().getProducts().get(i);
-                if (product.getId().equals(idItem)) {
+                if (product.getId().equals(idProduct)) {
                     product.setDescription(productDto.getDescription());
                     product.setClassification(productDto.getClassification());
                     product.setPrice(productDto.getPrice());
                     return new EstablishmentEntityToDto(repository.save(establishment.get())).build();
                 }
             }
+            throw new RuntimeException("Product with id: " + idProduct + " not found");
         }
 
-        return null;
+        throw new RuntimeException("Establishment with id: " + idEstablishment + " not found");
     }
 
     private void populateProduct(final EstablishmentDto establishmentDto, final Establishment establishment) {

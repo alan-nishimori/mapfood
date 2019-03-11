@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class MotoboyRepositoryImpl implements MotoboyRepositoryCustom {
+public class MotoboyRepositoryCustomImpl implements MotoboyRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
 
     @Autowired
-    public MotoboyRepositoryImpl(MongoTemplate mongoTemplate) {
+    public MotoboyRepositoryCustomImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
