@@ -96,7 +96,7 @@ fabric.properties
 *.iml
 *.idea
 *.log
-*.target/
+target
 .classpath
 -project
 /.resourceCache
