@@ -92,3 +92,14 @@ fabric.properties
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/intellij
+
+*.iml
+*.idea
+*.log
+*.target/
+.classpath
+-project
+/.resourceCache
+/.project
+/.idea
+.settings/
