@@ -1,4 +1,4 @@
-package mapfood.controller;
+package mapfood.controller.establishment;
 
 import mapfood.dto.establishment.EstablishmentDto;
 import mapfood.dto.establishment.product.ProductDto;
@@ -28,7 +28,7 @@ public class EstablishmentController {
     @Autowired
     EstablishmentService establishmentService;
 
-    private final Logger logger = LoggerFactory.getLogger(MotoboyController.class);
+    private final Logger logger = LoggerFactory.getLogger(EstablishmentController.class);
 
     @PostMapping
     public ResponseEntity<EstablishmentDto> save(@RequestBody @Valid EstablishmentDto establishmentDto) {

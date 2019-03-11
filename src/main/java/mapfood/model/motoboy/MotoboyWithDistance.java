@@ -1,7 +1,5 @@
 package mapfood.model.motoboy;
 
-import mapfood.model.motoboy.Motoboy;
-
 public class MotoboyWithDistance extends Motoboy {
 
     private double distance;

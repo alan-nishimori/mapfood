@@ -37,4 +37,8 @@ public class DirectionsResult {
         this.additionalProperties.put(name, value);
     }
 
+    public Route getRoute() {
+        return this.routes.get(0);
+    }
+
 }

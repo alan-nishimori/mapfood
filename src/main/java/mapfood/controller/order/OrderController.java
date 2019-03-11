@@ -1,4 +1,4 @@
-package mapfood.controller;
+package mapfood.controller.order;
 
 import mapfood.dto.order.OrderDto;
 import mapfood.model.order.OrderStatus;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    private final Logger logger = LoggerFactory.getLogger(MotoboyController.class);
+    private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @PostMapping
     public ResponseEntity<OrderDto> save(@RequestBody @Valid final OrderDto orderDto) {
@@ -49,7 +49,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDto> update(@PathVariable final Integer id, @RequestBody final OrderStatus orderStatus) {
+    public ResponseEntity<OrderDto> update(@PathVariable final String id, @RequestBody final OrderStatus orderStatus) {
         logger.info("Starting update on order status");
 
         final OrderDto order = orderService.update(id, orderStatus);
@@ -64,7 +64,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> findById(@PathVariable final Integer id) {
+    public ResponseEntity<OrderDto> findById(@PathVariable final String id) {
         logger.info("Searching for order with id: {}", id);
 
         final OrderDto order = orderService.findById(id);
@@ -103,8 +103,8 @@ public class OrderController {
     @GetMapping("establiment/{id}/range")
     public ResponseEntity<List<OrderDto>> findAllByEstablishmentIdAndDateBetween(
             @PathVariable final String id,
-            @RequestParam (required = true) final Date from,
-            @RequestParam (required = true) final Date to
+            @RequestParam (required = true) final Instant from,
+            @RequestParam (required = true) final Instant to
     ) {
         logger.info("Searching all orders from establishment id: {} - from: {} to: {}", id, from, to);
 
@@ -117,7 +117,7 @@ public class OrderController {
     @GetMapping("establishment/{id}/date-status")
     public ResponseEntity<List<OrderDto>> findAllByEstablishmentIdAndDateWithStatus(
             @PathVariable final String id,
-            @RequestParam (required = true) final Date date,
+            @RequestParam (required = true) final Instant date,
             @RequestParam (required = true) final OrderStatus orderStatus
     ) {
         logger.info("Searching all orders from establishment id: {} at: {} with status: {}", id, date, orderStatus);

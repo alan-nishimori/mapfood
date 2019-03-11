@@ -1,4 +1,4 @@
-package mapfood.controller;
+package mapfood.controller.motoboy;
 
 import mapfood.dto.motoboy.MotoboyDto;
 import mapfood.service.motoboy.MotoboyService;
