@@ -56,12 +56,14 @@ public class OrderServiceImpl implements OrderService {
         order.setId(order.getEstablishmentId() + order.getClientId().toString() + order.getCreatedAt().toString());
 
         double total = 0;
-        for (ProductDto productDto : orderDto.getProductsDto()) {
 
-            final Product product = establishment.get().getProductById(productDto.getId());
+        final List<String> productsId = orderDto.getProductsId();
+        for (int i = 0; i < productsId.size(); i++) {
+
+            final Product product = establishment.get().getProductById(productsId.get(i));
 
             if (Objects.isNull(product)) {
-                throw new RuntimeException("Product with id: " + productDto.getId() + " not found");
+                throw new RuntimeException("Product with id: " + productsId.get(i) + " not found");
             }
 
             total += product.getPrice();
