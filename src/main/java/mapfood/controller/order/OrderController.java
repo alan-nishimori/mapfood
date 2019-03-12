@@ -100,7 +100,7 @@ public class OrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @GetMapping("establiment/{id}/range")
+    @GetMapping("establishment/{id}/range")
     public ResponseEntity<List<OrderDto>> findAllByEstablishmentIdAndDateBetween(
             @PathVariable final String id,
             @RequestParam (required = true) final Instant from,
