@@ -73,4 +73,16 @@ public class EstablishmentDto {
     public void setProducts(final List<ProductDto> products) {
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return "EstablishmentDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", description='" + description + '\'' +
+                ", location=" + location +
+                ", products=" + products +
+                '}';
+    }
 }

@@ -97,4 +97,18 @@ public class OrderDto {
     public void setCreatedAt(final Instant createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "id='" + id + '\'' +
+                ", establishmentId='" + establishmentId + '\'' +
+                ", clientId=" + clientId +
+                ", productsId=" + productsId +
+                ", productsDto=" + productsDto +
+                ", orderStatus=" + orderStatus +
+                ", value=" + value +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

@@ -26,4 +26,12 @@ public class ClientDto {
     public void setLocation(final List<Double> location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        return "ClientDto{" +
+                "id=" + id +
+                ", location=" + location +
+                '}';
+    }
 }

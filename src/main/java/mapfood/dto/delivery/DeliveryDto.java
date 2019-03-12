@@ -80,4 +80,17 @@ public class DeliveryDto {
     public void setStatus(final DeliveryStatus status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "DeliveryDto{" +
+                "id='" + id + '\'' +
+                ", orders=" + orders +
+                ", motoboyDto=" + motoboyDto +
+                ", routes=" + routes +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", status=" + status +
+                '}';
+    }
 }
