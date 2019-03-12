@@ -48,4 +48,14 @@ public class ProductDto {
     public void setPrice(final Double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ProductDto{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", classification='" + classification + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

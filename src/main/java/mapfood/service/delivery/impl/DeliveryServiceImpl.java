@@ -7,6 +7,7 @@ import mapfood.model.client.Client;
 import mapfood.model.delivery.Delivery;
 import mapfood.model.delivery.DeliveryStatus;
 import mapfood.model.establishment.Establishment;
+import mapfood.model.motoboy.Motoboy;
 import mapfood.model.motoboy.MotoboyStatus;
 import mapfood.model.motoboy.MotoboyWithDistance;
 import mapfood.model.order.Order;
@@ -71,8 +72,10 @@ public class DeliveryServiceImpl implements DeliveryService {
             throw new RuntimeException("No motoboy available to delivery");
         }
 
-        delivery.setMotoboy(new MotoboyWithDistanceToMotoboy(motoboy.get()).build());
+        final Motoboy motoboyEntity = new MotoboyWithDistanceToMotoboy(motoboy.get()).build();
+        delivery.setMotoboy(motoboyEntity);
         delivery.setId(motoboy.get().getId().toString() + delivery.getCreatedAt().toString());
+        motoboyEntity.setMotoboyStatus(MotoboyStatus.WAITING);
 
         try {
             delivery.addRoute(directionsService
@@ -89,6 +92,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.addOrder(order);
 
         deliveryRepository.save(delivery);
+        motoboyRepository.save(motoboyEntity);
         logger.info("Delivery successfully saved.");
     }
 

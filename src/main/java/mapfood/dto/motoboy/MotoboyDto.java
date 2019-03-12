@@ -13,7 +13,6 @@ public class MotoboyDto {
     @NotNull
     private List<Double> location;
 
-    @NotNull
     private MotoboyStatus motoboyStatus;
 
     public int getId() {
@@ -38,5 +37,14 @@ public class MotoboyDto {
 
     public void setMotoboyStatus(final MotoboyStatus motoboyStatus) {
         this.motoboyStatus = motoboyStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "MotoboyDto{" +
+                "id=" + id +
+                ", location=" + location +
+                ", motoboyStatus=" + motoboyStatus +
+                '}';
     }
 }

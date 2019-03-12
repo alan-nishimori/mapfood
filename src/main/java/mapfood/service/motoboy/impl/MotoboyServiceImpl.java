@@ -3,6 +3,7 @@ package mapfood.service.motoboy.impl;
 import mapfood.converter.motoboy.MotoboyEntityToDto;
 import mapfood.dto.motoboy.MotoboyDto;
 import mapfood.model.motoboy.Motoboy;
+import mapfood.model.motoboy.MotoboyStatus;
 import mapfood.repository.motoboy.MotoboyRepository;
 import mapfood.service.motoboy.MotoboyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,8 @@ public class MotoboyServiceImpl implements MotoboyService {
         final Motoboy motoboy = new Motoboy();
         motoboy.setId(motoboyDto.getId());
         motoboy.setLocation(new GeoJsonPoint(motoboyDto.getLocation().get(0), motoboyDto.getLocation().get(1)));
+        motoboy.setMotoboyStatus(Objects.isNull(motoboyDto.getMotoboyStatus()) ?
+                MotoboyStatus.UNAVAILABLE : motoboyDto.getMotoboyStatus());
 
         return new MotoboyEntityToDto(motoboyRepository.save(motoboy)).build();
     }
