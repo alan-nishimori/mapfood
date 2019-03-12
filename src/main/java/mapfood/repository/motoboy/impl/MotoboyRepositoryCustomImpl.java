@@ -22,7 +22,6 @@ public class MotoboyRepositoryCustomImpl implements MotoboyRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
 
-    @Autowired
     public MotoboyRepositoryCustomImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }

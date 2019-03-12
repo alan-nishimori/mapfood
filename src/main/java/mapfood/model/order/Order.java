@@ -16,7 +16,7 @@ public class Order {
     // establishmentid + client id + createdAt
     private String id;
 
-    private final Instant createdAt = Instant.now();
+    private Instant createdAt = Instant.now();
 
     @Indexed
     private String establishmentId;
@@ -26,7 +26,7 @@ public class Order {
 
     private Double value;
 
-    private final List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     private OrderStatus orderStatus = OrderStatus.PREPARING;
 
@@ -40,6 +40,10 @@ public class Order {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getEstablishmentId() {
@@ -80,5 +84,18 @@ public class Order {
 
     public void setOrderStatus(final OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", createdAt=" + createdAt +
+                ", establishmentId='" + establishmentId + '\'' +
+                ", clientId=" + clientId +
+                ", value=" + value +
+                ", products=" + products +
+                ", orderStatus=" + orderStatus +
+                '}';
     }
 }

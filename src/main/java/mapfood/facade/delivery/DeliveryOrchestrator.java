@@ -30,7 +30,7 @@ public class DeliveryOrchestrator {
         final List<Order> orders = orderRepository.findAllByEstablishmentIdAndCreatedAtBeforeAndOrderStatus(
                 order.getEstablishmentId(), Instant.now(), OrderStatus.PREPARING);
 
-        if (Objects.isNull(orders)) {
+        if (1 == orders.size()) {
             deliveryService.save(order);
         } else {
             final Optional<Delivery> delivery = deliveryRepository.findByOrdersContaining(orders.get(0));
