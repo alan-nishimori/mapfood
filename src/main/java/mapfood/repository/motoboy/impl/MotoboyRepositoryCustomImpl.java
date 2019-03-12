@@ -3,7 +3,6 @@ package mapfood.repository.motoboy.impl;
 import mapfood.model.motoboy.MotoboyStatus;
 import mapfood.model.motoboy.MotoboyWithDistance;
 import mapfood.repository.motoboy.MotoboyRepositoryCustom;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;

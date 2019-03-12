@@ -13,13 +13,14 @@ public class OrderEntityToDto {
     }
 
     public OrderDto build() {
-        OrderDto orderDto = new OrderDto();
+        final OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
         orderDto.setClientId(order.getClientId());
         orderDto.setEstablishmentId(order.getEstablishmentId());
         orderDto.setOrderStatus(order.getOrderStatus());
         orderDto.setValue(order.getValue());
         orderDto.setCreatedAt(order.getCreatedAt());
+        orderDto.setOrderStatus(order.getOrderStatus());
 
         order.getProducts().forEach(product -> orderDto.addProduct(new ProductEntityToDto(product).build()));
 

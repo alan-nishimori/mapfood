@@ -21,8 +21,6 @@ public class OrderDto {
     private Integer clientId;
 
     @NotNull
-    private List<String> productsId;
-
     private List<ProductDto> productsDto;
 
     private OrderStatus orderStatus;
@@ -53,14 +51,6 @@ public class OrderDto {
 
     public void setClientId(final Integer clientId) {
         this.clientId = clientId;
-    }
-
-    public List<String> getProductsId() {
-        return productsId;
-    }
-
-    public void setProductsId(final List<String> productsId) {
-        this.productsId = productsId;
     }
 
     public List<ProductDto> getProductsDto() {
@@ -104,7 +94,6 @@ public class OrderDto {
                 "id='" + id + '\'' +
                 ", establishmentId='" + establishmentId + '\'' +
                 ", clientId=" + clientId +
-                ", productsId=" + productsId +
                 ", productsDto=" + productsDto +
                 ", orderStatus=" + orderStatus +
                 ", value=" + value +
