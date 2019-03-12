@@ -3,6 +3,7 @@ package mapfood.service.delivery.impl;
 import mapfood.converter.delivery.DeliveryEntityToDto;
 import mapfood.converter.motoboy.MotoboyWithDistanceToMotoboy;
 import mapfood.dto.delivery.DeliveryDto;
+import mapfood.dto.google.maps.api.Step;
 import mapfood.model.client.Client;
 import mapfood.model.delivery.Delivery;
 import mapfood.model.delivery.DeliveryStatus;
@@ -26,7 +27,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -124,7 +127,6 @@ public class DeliveryServiceImpl implements DeliveryService {
             throw new RuntimeException("Error retrieving route.");
         }
 
-        order.setOrderStatus(null);
         delivery.get().addOrder(order);
         delivery.get().setUpdatedAt(Instant.now());
         deliveryRepository.save(delivery.get());
@@ -179,6 +181,60 @@ public class DeliveryServiceImpl implements DeliveryService {
         }
 
         return null;
+    }
+
+    @Override
+    public DeliveryDto updateStatus(final String id, final DeliveryStatus deliveryStatus) throws RuntimeException{
+        final Optional<Delivery> delivery = deliveryRepository.findById(id);
+
+        if (!delivery.isPresent()) {
+            throw new RuntimeException("No delivery found for id: " + id);
+        }
+
+        delivery.get().setUpdatedAt(Instant.now());
+        delivery.get().setStatus(deliveryStatus);
+
+        final Motoboy motoboy = delivery.get().getMotoboy();
+        switch (deliveryStatus) {
+            case ON_ROUTE:
+                motoboy.setMotoboyStatus(MotoboyStatus.DELIVERING);
+                motoboyRepository.save(motoboy);
+                break;
+
+            case FINISHED:
+                motoboy.setMotoboyStatus(MotoboyStatus.AVAILABLE);
+                motoboyRepository.save(motoboy);
+                break;
+        }
+
+        final Delivery delivery1 = deliveryRepository.save(delivery.get());
+        return new DeliveryEntityToDto(delivery1).build();
+    }
+
+    @Override
+    public Map<String, List<String>> getRoute(final String id) throws RuntimeException {
+        final Optional<Delivery> delivery = deliveryRepository.findById(id);
+
+        if (!delivery.isPresent()) {
+            throw new RuntimeException("No delivery found for id: " + id);
+        }
+
+        final Map<String, List<String>> routes = new HashMap<>();
+
+        List<String> steps = new ArrayList<>();
+        for (Step step : delivery.get().getRoutes().get(0).legs.get(0).steps) {
+            steps.add(step.htmlInstructions);
+        }
+        routes.put("Para Estabelecimento: ", steps);
+
+        for (int i = 0; i < delivery.get().getRoutes().get(1).legs.size(); i++) {
+            steps = new ArrayList<>();
+            for (Step step : delivery.get().getRoutes().get(1).legs.get(i).steps) {
+                steps.add(step.htmlInstructions);
+            }
+            routes.put("Entrega " + (i+1) + ": ", steps);
+        }
+        return routes;
     }
 
     private Establishment getEstablishmentById(final String id) {

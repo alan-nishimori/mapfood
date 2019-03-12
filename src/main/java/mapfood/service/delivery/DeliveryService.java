@@ -1,9 +1,11 @@
 package mapfood.service.delivery;
 
 import mapfood.dto.delivery.DeliveryDto;
+import mapfood.model.delivery.DeliveryStatus;
 import mapfood.model.order.Order;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DeliveryService {
 
@@ -18,4 +20,8 @@ public interface DeliveryService {
     DeliveryDto findDeliveryNotFinishedByMotoboy(Integer id);
 
     DeliveryDto findByOrder(String id) throws RuntimeException;
+
+    DeliveryDto updateStatus(String id, DeliveryStatus deliveryStatus);
+
+    Map<String, List<String>> getRoute(String id);
 }
