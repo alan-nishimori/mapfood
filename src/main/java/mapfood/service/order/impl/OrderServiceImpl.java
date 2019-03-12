@@ -3,17 +3,15 @@ package mapfood.service.order.impl;
 import mapfood.converter.order.OrderEntityToDto;
 import mapfood.dto.establishment.product.ProductDto;
 import mapfood.dto.order.OrderDto;
+import mapfood.facade.delivery.DeliveryOrchestrator;
 import mapfood.model.client.Client;
-import mapfood.model.delivery.Delivery;
 import mapfood.model.establishment.Establishment;
 import mapfood.model.establishment.product.Product;
 import mapfood.model.order.Order;
 import mapfood.model.order.OrderStatus;
 import mapfood.repository.client.ClientRepository;
-import mapfood.repository.delivery.DeliveryRepository;
 import mapfood.repository.establishment.EstablishmentRepository;
 import mapfood.repository.order.OrderRepository;
-import mapfood.service.delivery.DeliveryService;
 import mapfood.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,10 +35,8 @@ public class OrderServiceImpl implements OrderService {
     EstablishmentRepository establishmentRepository;
 
     @Autowired
-    DeliveryService deliveryService;
+    DeliveryOrchestrator deliveryOrchestrator;
 
-    @Autowired
-    DeliveryRepository deliveryRepository;
 
     @Override
     public OrderDto save(final OrderDto orderDto) throws RuntimeException{
@@ -75,19 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
         order = orderRepository.save(order);
 
-        List<Order> orders = orderRepository.findAllByEstablishmentIdAndCreatedAtBeforeAndOrderStatus(
-                order.getEstablishmentId(), Instant.now(), OrderStatus.PREPARING);
-
-        if (Objects.isNull(orders)) {
-            deliveryService.save(order);
-        } else {
-            final Optional<Delivery> delivery = deliveryRepository.findByOrdersContaining(orders.get(0));
-            if (delivery.isPresent()) {
-                deliveryService.addOrder(delivery.get().getId(), order);
-            } else {
-                deliveryService.save(order);
-            }
-        }
+        deliveryOrchestrator.deliveryCreator(order);
 
         return new OrderEntityToDto(order).build();
     }
