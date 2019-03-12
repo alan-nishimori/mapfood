@@ -88,7 +88,6 @@ public class DeliveryServiceImpl implements DeliveryService {
         }
 
         delivery.addClientLocation(client.getLocation());
-        order.setOrderStatus(null);
         delivery.addOrder(order);
 
         deliveryRepository.save(delivery);

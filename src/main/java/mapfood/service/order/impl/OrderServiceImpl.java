@@ -53,7 +53,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setClientId(orderDto.getClientId());
         order.setEstablishmentId(orderDto.getEstablishmentId());
-        order.setId(order.getEstablishmentId() + order.getClientId().toString() + order.getCreatedAt().toString());
 
         double total = 0;
 

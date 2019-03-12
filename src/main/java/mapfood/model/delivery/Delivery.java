@@ -16,19 +16,18 @@ import java.util.List;
 public class Delivery {
 
     @Id
-    // motoboyid + createdAt
     private String id;
 
     @Indexed
-    private final List<Order> orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     @Indexed
     private Motoboy motoboy;
 
     // index 0 = motoboy to establishment | index 1 = establishment to clients
-    private final List<Route> routes = new ArrayList<>();
+    private List<Route> routes = new ArrayList<>();
 
-    private final Instant createdAt = Instant.now();
+    private Instant createdAt = Instant.now();
 
     private Instant updatedAt;
 
