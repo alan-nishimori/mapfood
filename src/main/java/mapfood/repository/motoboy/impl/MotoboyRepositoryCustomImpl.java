@@ -32,7 +32,7 @@ public class MotoboyRepositoryCustomImpl implements MotoboyRepositoryCustom {
         List<AggregationOperation> list = new ArrayList<>();
 
         list.add(Aggregation.geoNear(NearQuery.near(point).spherical(true), "distance"));
-        list.add(Aggregation.match(Criteria.where("status").is(MotoboyStatus.AVAILABLE)));
+        list.add(Aggregation.match(Criteria.where("motoboyStatus").is(MotoboyStatus.AVAILABLE)));
         list.add(Aggregation.sort(Sort.Direction.ASC, "distance"));
         list.add(Aggregation.limit(10));
 
