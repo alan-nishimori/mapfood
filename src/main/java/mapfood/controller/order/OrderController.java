@@ -49,7 +49,10 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDto> update(@PathVariable final String id, @RequestBody final OrderStatus orderStatus) {
+    public ResponseEntity<OrderDto> update(
+            @PathVariable final String id,
+            @RequestParam (required = true) final OrderStatus orderStatus
+    ) {
         logger.info("Starting update on order status");
 
         final OrderDto order = orderService.update(id, orderStatus);
