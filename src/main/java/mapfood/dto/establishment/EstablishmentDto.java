@@ -70,8 +70,8 @@ public class EstablishmentDto {
         return products;
     }
 
-    public void setProducts(final List<ProductDto> products) {
-        this.products = products;
+    public void addProduct(final ProductDto productDto) {
+        this.products.add(productDto);
     }
 
     @Override

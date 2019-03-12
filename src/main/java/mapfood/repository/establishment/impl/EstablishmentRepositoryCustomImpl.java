@@ -27,7 +27,7 @@ public class EstablishmentRepositoryCustomImpl implements EstablishmentRepositor
     @Override
     public List<EstablishmentWithDistance> findEstablishmentsNextToClient(GeoJsonPoint point) {
         List<AggregationOperation> list = new ArrayList<>();
-        Distance distance = new Distance(1, Metrics.KILOMETERS);
+        Distance distance = new Distance(2, Metrics.KILOMETERS);
 
         list.add(Aggregation.geoNear(NearQuery.near(point).spherical(true).maxDistance(distance), "distance"));
         list.add(Aggregation.sort(Sort.Direction.ASC, "distance", "name"));
