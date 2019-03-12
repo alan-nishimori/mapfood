@@ -1,9 +1,11 @@
 package mapfood.service.establishment.impl;
 
 import mapfood.converter.establishment.EstablishmentEntityToDto;
+import mapfood.converter.establishment.EstablishmentWithDistanceToDto;
 import mapfood.dto.establishment.EstablishmentDto;
 import mapfood.dto.establishment.product.ProductDto;
 import mapfood.model.establishment.Establishment;
+import mapfood.model.establishment.EstablishmentWithDistance;
 import mapfood.model.establishment.product.Product;
 import mapfood.repository.establishment.EstablishmentRepository;
 import mapfood.service.establishment.EstablishmentService;
@@ -130,7 +132,7 @@ public class EstablishmentServiceImpl implements EstablishmentService {
 
     @Override
     public EstablishmentDto updateProduct(
-            final String idEstablishment, final String idProduct, final ProductDto productDto) throws RuntimeException{
+            final String idEstablishment, final String idProduct, final ProductDto productDto) throws RuntimeException {
         final Optional<Establishment> establishment = repository.findById(idEstablishment);
 
         if (establishment.isPresent()) {
@@ -147,6 +149,17 @@ public class EstablishmentServiceImpl implements EstablishmentService {
         }
 
         throw new RuntimeException("Establishment with id: " + idEstablishment + " not found");
+    }
+
+    @Override
+    public List<EstablishmentDto> findNearbyByLocation(final GeoJsonPoint point) {
+        final List<EstablishmentWithDistance> establishments = repository.findEstablishmentsNextToClient(point);
+        final List<EstablishmentDto> establishmentsDto = new ArrayList<>();
+
+        establishments.forEach(establishment ->
+                establishmentsDto.add(new EstablishmentWithDistanceToDto(establishment).build()));
+
+        return establishmentsDto;
     }
 
     private void populateProduct(final EstablishmentDto establishmentDto, final Establishment establishment) {

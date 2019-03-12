@@ -18,10 +18,9 @@ public class EstablishmentEntityToDto {
 
     public EstablishmentDto build() {
         EstablishmentDto establishmentDto = new EstablishmentDto();
-        List<ProductDto> productsDto = new ArrayList<>();
         List<Double> location = new ArrayList<>();
 
-        establishment.getProducts().forEach(product -> productsDto.add(new ProductEntityToDto(product).build()));
+        establishment.getProducts().forEach(product -> establishmentDto.addProduct(new ProductEntityToDto(product).build()));
 
         location.add(establishment.getLocation().getX());
         location.add(establishment.getLocation().getY());
@@ -31,7 +30,6 @@ public class EstablishmentEntityToDto {
         establishmentDto.setCity(establishment.getCity());
         establishmentDto.setDescription(establishment.getDescription());
         establishmentDto.setLocation(location);
-        establishmentDto.setProducts(productsDto);
 
         return establishmentDto;
     }
