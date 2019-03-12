@@ -168,9 +168,17 @@ public class DeliveryServiceImpl implements DeliveryService {
             throw new RuntimeException("Order not found for id: " + id);
         }
 
-        final Optional<Delivery> delivery = deliveryRepository.findByOrdersContaining(order.get());
+        final List<Delivery> deliveries = deliveryRepository.findAllByCreatedAtBeforeAndStatus(Instant.now(), DeliveryStatus.OPEN);
 
-        return delivery.map(delivery1 -> new DeliveryEntityToDto(delivery1).build()).orElse(null);
+        for (Delivery delivery : deliveries) {
+            for (Order deliveryOrder : delivery.getOrders()) {
+                if (deliveryOrder.getId().equals(id)) {
+                    return new DeliveryEntityToDto(delivery).build();
+                }
+            }
+        }
+
+        return null;
     }
 
     private Establishment getEstablishmentById(final String id) {

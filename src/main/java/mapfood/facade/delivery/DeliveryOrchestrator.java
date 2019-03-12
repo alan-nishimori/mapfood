@@ -1,6 +1,6 @@
 package mapfood.facade.delivery;
 
-import mapfood.model.delivery.Delivery;
+import mapfood.dto.delivery.DeliveryDto;
 import mapfood.model.order.Order;
 import mapfood.model.order.OrderStatus;
 import mapfood.repository.delivery.DeliveryRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Component
 public class DeliveryOrchestrator {
@@ -32,9 +32,9 @@ public class DeliveryOrchestrator {
         if (1 == orders.size()) {
             deliveryService.save(order);
         } else {
-            final Optional<Delivery> delivery = deliveryRepository.findByOrdersContaining(orders.get(0));
-            if (delivery.isPresent() && delivery.get().getOrders().size() <= 5) {
-                deliveryService.addOrder(delivery.get().getId(), order);
+            final DeliveryDto delivery = deliveryService.findByOrder(orders.get(0).getId());
+            if (Objects.nonNull(delivery) && delivery.getOrders().size() <= 5) {
+                deliveryService.addOrder(delivery.getId(), order);
             } else {
                 deliveryService.save(order);
             }

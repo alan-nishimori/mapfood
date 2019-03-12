@@ -6,13 +6,14 @@ import mapfood.model.order.Order;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface DeliveryRepository extends MongoRepository<Delivery, String> {
 
-    Optional<Delivery> findByOrdersContaining(Order order);
+    List<Delivery> findAllByCreatedAtBeforeAndStatus(Instant now, DeliveryStatus deliveryStatus);
 
     List<Delivery> findAllByMotoboy_Id(Integer id);
 
